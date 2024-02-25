@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import {BrowserRouter, Routes, Route} from "react-router-dom";
+import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import './index.css'
 import App from './pages/App.jsx'
 import Navbar from "./components/Navbar.jsx";
@@ -10,7 +10,7 @@ import MealDetail from "./pages/MealDetail.jsx";
 
 ReactDOM.createRoot(document.getElementById('root')).render(
     <React.StrictMode>
-        <BrowserRouter basename="/hungry-db">
+        <Router basename="/hungry-db">
             <div className="container mx-auto ">
 
                 <Navbar />
@@ -21,6 +21,6 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 
             </div>
             <Footer />
-        </BrowserRouter>
+        </Router>
     </React.StrictMode>,
 )
