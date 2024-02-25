@@ -1,4 +1,5 @@
 import {useLocation} from "react-router-dom";
+import { ArrowUpRightIcon } from '@heroicons/react/24/solid'
 import {useEffect, useState} from "react";
 import {getMealById} from "../functions.jsx";
 
@@ -22,7 +23,7 @@ const MealDetail = () => {
             <div className="my-5 mx-5">
                 <div className="mb-7">
                     <h1 className="text-xl font-bold">MEAL DETAILS</h1>
-                    <div className="h-2 w-36 bg-primary"></div>
+                    <div className="h-1 w-36 bg-primary"></div>
                 </div>
                 <div className="shadow p-6">
                     <div className="grid grid-cols-1 gap-2 lg:grid-cols-2 lg:gap-5">
@@ -32,7 +33,10 @@ const MealDetail = () => {
                             className="w-auto"
                         />
                         <div>
-                            <p className="text-primary text-xl font-bold">{meal.strMeal}</p>
+                            <a className="text-primary text-xl font-bold flex items-center gap-1" href={meal.strSource} target="_blank">
+                                <span>{meal.strMeal}</span>
+                                <ArrowUpRightIcon className="w-4 h-4"/>
+                            </a>
                             <div className="h-0.5 w-full bg-primary mt-5"></div>
                             <div className="flex flex-col gap-2">
                                 <p><span className="font-bold">Category: </span>{meal.strCategory}</p>
@@ -85,16 +89,30 @@ const MealDetail = () => {
                                 return (
                                     <div className="flex gap-2 mb-2" key={index}>
                                         <img src="https://img.icons8.com/ios-filled/50/checkmark--v1.png" alt="done"
-                                            className="w-8 h-8 border rounded-r-full p-1 flex-nowrap"
+                                             className="w-8 h-8 border rounded-r-full p-1 flex-nowrap"
                                         />
-                                            <p key={index}>{measure} {meal.ingredients[index]}</p>
+                                        <p key={index}>{measure}</p>
                                     </div>
                                 )
                             })
                         }
 
                     </div>
+                    <div>
+                        {
+                            meal?.strYoutube ? (
+                                <>
+                                    <p className="font-bold my-5">Watch:</p>
+                                    <iframe
+                                        src="https://www.youtube.com/embed/aB41Q7kDZQ0"
+                                        className="w-full min-h-56 lg:min-h-96"
+                                        allowFullScreen
+                                    />
+                                </>
+                            ) : ""
+                        }
 
+                    </div>
                 </div>
             </div>
         </>

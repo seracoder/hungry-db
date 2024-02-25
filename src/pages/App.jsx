@@ -1,4 +1,5 @@
-import '../App.css'
+import '../App.css';
+// eslint-disable-next-line no-unused-vars
 import React, {useEffect, useState} from "react";
 import MealCard from "../components/MealCard.jsx";
 import {getMealByName, getMeals} from "../functions.jsx";
@@ -12,30 +13,25 @@ function App() {
     const searchParams = new URLSearchParams(location.search);
     let searchString = searchParams.get('search');
     useEffect(() => {
-        setLoading(true)
-        setMeals([])
-        if (!searchString || searchString === '') {
-            getMeals(12)
-                .then((_meals) => {
-                    setMeals(_meals)
-                    setLoading(false)
-                })
-                .catch((error) => {
-                    setLoading(false)
-                    console.log(error)
-                })
-        } else {
-            getMealByName(searchString)
-                .then((_meals) => {
-                    setMeals(_meals)
-                    setLoading(false)
-                })
-                .catch((error) => {
-                    setLoading(false)
-                    console.log(error)
-                })
-        }
+        const loadMeals = async () => {
+            setLoading(true);
+            setMeals([]);
+            try {
+                if (!searchString || searchString === '') {
+                    const _meals = await getMeals(12);
+                    setMeals(_meals);
+                } else {
+                    const _meals = await getMealByName(searchString);
+                    setMeals(_meals);
+                }
+                setLoading(false);
+            } catch (error) {
+                setLoading(false);
+                console.log(error);
+            }
+        };
 
+        loadMeals();
     }, [searchString]);
     return (
     <>

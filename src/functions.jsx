@@ -24,7 +24,6 @@ async function getMealById(id) {
 
 async function getMealByName(name) {
     const url = `https://www.themealdb.com/api/json/v1/1/search.php?s=${name}`;
-    console.log(url)
     const response = await fetch(url);
     const data = await response.json();
     const meals = data.meals;
@@ -43,6 +42,7 @@ async function getRandomMeal() {
 }
 
 function parseMeal(oldMeal) {
+    console.log(oldMeal)
     const newMeal = {
         idMeal: oldMeal.idMeal,
         strMeal: oldMeal.strMeal,
@@ -50,9 +50,9 @@ function parseMeal(oldMeal) {
         strCategory: oldMeal.strCategory,
         strArea: oldMeal.strArea,
         strInstructions: oldMeal.strInstructions,
-        instructions: oldMeal.strInstructions.split('\r\n').map(instruction => instruction.trim()),
+        instructions: oldMeal.strInstructions.split('STEP').filter(instruction => instruction.trim() !== ""),
         strMealThumb: oldMeal.strMealThumb,
-        strTags: oldMeal.strTags ? oldMeal.strTags.split(',').map(tag => tag.trim()) : [],
+        strTags: oldMeal.strTags ? oldMeal.strTags.split(',').filter(tag => tag.trim() !== "") : [],
         strYoutube: oldMeal.strYoutube,
         ingredients: [],
         measures: [],
@@ -73,6 +73,12 @@ function parseMeal(oldMeal) {
         if (measure?.length > 3) {
             newMeal.measures.push(measure);
         }
+    }
+
+    if (newMeal.instructions.length === 1) {
+        newMeal.instructions = newMeal.instructions[0]
+            .split("\n")
+            .filter(instruction => instruction.trim() !== "")
     }
     return newMeal;
 }
